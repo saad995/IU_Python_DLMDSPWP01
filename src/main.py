@@ -65,7 +65,9 @@ def main():
 
         # Data visualization
         visualizer = BokehDataVisualizer()
-        visualizer.visualize_data(train_data['x'].values, train_data.drop(columns=['x']).values, best_fit_functions, test_data['x'].values, test_data['y'].values, np.array(mapped_test_data).T)
+        test_data_ordered = test_data.sort_values('x')
+        mapped_test_data_ordered = mapped_test_data.sort_values('x')
+        visualizer.visualize_data(train_data['x'].values, train_data.drop(columns=['x']).values, best_fit_functions, test_data_ordered['x'].values, test_data_ordered['y'].values, mapped_test_data_ordered)
 
     except Exception as e:
         print(f"An error occurred: {str(e)}")

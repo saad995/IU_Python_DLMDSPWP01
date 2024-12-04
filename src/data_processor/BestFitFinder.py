@@ -58,5 +58,5 @@ class BestFitFinder:
                     best_fit_func = i + 1  # Indicate which of the four ideal functions it corresponds to
                     best_deviation = deviation
             if best_fit_func is not None:
-                mapped_data.append((x_test, y_test, best_fit_func, best_deviation))
-        return pd.DataFrame(mapped_data, columns=['x', 'y', 'ideal_func', 'deviation'])
+                mapped_data.append((x_test, y_test, best_fit_func, y_ideal_value, best_deviation))
+        return pd.DataFrame(mapped_data, columns=['x', 'y', 'ideal_func', 'ideal_func_val', 'deviation'])
