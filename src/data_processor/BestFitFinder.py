@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import csv
 
 class BestFitFinder:
     def __init__(self, train_data, ideal_data):
@@ -29,6 +29,7 @@ class BestFitFinder:
     
     def find_best_fit_functions(self):
         best_fit = []
+        best_fit.append(self.train_data['x'])
         for col_train in self.train_data.columns[1:]:  # Iterate over each y column in the training data
             min_diff = np.inf
             best_func = None
@@ -43,20 +44,47 @@ class BestFitFinder:
         return pd.concat(best_fit, axis=1)  # Concatenate the best fit functions as a DataFrame
     
     # Function to map test data to the best fit ideal functions
-    def map_test_data(test_data, best_fit, max_deviations):
+    def map_test_data(file_path, best_fit, max_deviations):
+        test_data = []
         mapped_data = []
-        for _, row in test_data.iterrows():  # Iterate over each row in the test data
-            x_test, y_test = row['x'], row['y']
-            min_deviation = np.inf
-            best_fit_func = None
-            best_deviation = None
-            for i, col_ideal in enumerate(best_fit.columns):
-                y_ideal_value = best_fit.loc[test_data.index[test_data['x'] == x_test], col_ideal].values[0]
-                deviation = abs(y_test - y_ideal_value)
-                if deviation < min_deviation and deviation <= max_deviations[i]:
-                    min_deviation = deviation
-                    best_fit_func = i + 1  # Indicate which of the four ideal functions it corresponds to
-                    best_deviation = deviation
-            if best_fit_func is not None:
-                mapped_data.append((x_test, y_test, best_fit_func, y_ideal_value, best_deviation))
-        return pd.DataFrame(mapped_data, columns=['x', 'y', 'ideal_func', 'ideal_func_val', 'deviation'])
+        with open(file_path, mode="r") as file: # Iterate over each row in the test data
+            reader = csv.reader(file)
+            header = next(reader)  # Skip the header row if necessary.
+            for row in reader:
+                x_test, y_test = float(row[0]), float(row[1])
+                test_data.append((x_test, y_test))
+                min_deviation = np.inf
+                best_fit_func = None
+                best_deviation = None
+                best_deviation_no_of_ideal_func = None
+                for i, col_ideal in enumerate(best_fit.columns[1:]):
+                    y_ideal_value = best_fit.loc[best_fit['x'] == x_test, col_ideal].values[0]
+                    deviation = abs(y_test - y_ideal_value)
+                    if deviation < min_deviation and deviation <= max_deviations[i]:
+                        min_deviation = deviation
+                        best_fit_func = i + 1  # Indicate which of the four ideal functions it corresponds to
+                        best_deviation = deviation
+                        best_deviation_no_of_ideal_func = col_ideal.removeprefix('y')
+                if best_fit_func is not None:
+                    mapped_data.append((
+                        x_test,
+                        y_test,
+                        best_deviation,
+                        best_deviation_no_of_ideal_func,
+                        y_ideal_value
+                    ))
+        test_dataframe = pd.DataFrame(
+            test_data,
+            columns=['x','y']
+        )
+        mapped_dataframe = pd.DataFrame(
+            mapped_data,
+            columns=[
+                'X (test func)',
+                'Y (test func)',
+                'Delta Y (test func)',
+                'No.  of ideal func',
+                'ideal_func_val'
+            ]
+        )
+        return test_dataframe, mapped_dataframe 
