@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Table, Column, Float, Integer, MetaData
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import SQLAlchemyError
 from .db_operations import DBOperations
 from exception_handler import handle_exception
 
