@@ -1,15 +1,16 @@
-import os
-from exception_handler import FileNotFoundError
+from abc import ABC, abstractmethod
 
-class FileOperations:
-    """Base class for file operations"""
 
+class file_operations(ABC):
+    """
+    Abstract base class for file operations.
+    This class defines the interface that all derived file operation classes must implement.
+    """
+
+    @abstractmethod
     def read_file(self, file_path):
-        """Reads the file from the given path"""
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"File {file_path} does not exist.")
-        try:
-            with open(file_path, 'r') as file:
-                return file.read()
-        except Exception as e:
-            raise FileNotFoundError(f"Error reading file {file_path}: {str(e)}")
+        """
+        Reads the file from the given path.
+        :param file_path: File path as string.
+        """
+        pass

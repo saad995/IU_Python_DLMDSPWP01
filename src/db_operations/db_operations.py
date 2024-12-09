@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
-class DBOperations(ABC):
+
+class db_operations(ABC):
     """
     Abstract base class for database operations.
     This class defines the interface that all derived database operation classes must implement.
