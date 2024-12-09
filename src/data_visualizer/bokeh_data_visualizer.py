@@ -48,7 +48,7 @@ class bokeh_data_visualizer(data_visualizer):
                         x_axis_label='x', y_axis_label='y')
 
             # Plot test data
-            p3.line(mapped_data['X (test func)'], mapped_data['Y (test func)'], legend_label='Test Data',
+            p3.line(mapped_data['X (test func)'], mapped_data['Y (test func)'], legend_label='Test Function',
                     line_width=2, color="red")
 
             # Plot mapped ideal functions
