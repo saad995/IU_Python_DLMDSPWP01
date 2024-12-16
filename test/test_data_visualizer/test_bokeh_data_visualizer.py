@@ -46,7 +46,7 @@ class test_bokeh_data_visualizer(unittest.TestCase):
         self.current_dateTime = datetime.now().strftime("%Y%m%d%H%M%S")
 
         # Create output directory if not exists
-        self.output_dir = "./graphs"
+        self.output_dir = "./output"
         os.makedirs(self.output_dir, exist_ok=True)
 
     def test_visualize_data_success(self):

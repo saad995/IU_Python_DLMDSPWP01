@@ -59,7 +59,7 @@ class bokeh_data_visualizer(data_visualizer):
             layout.children.append(p3)
 
             # Save the plot
-            output_file(f"./graphs/graph_plotting_{current_dateTime}.html")
+            output_file(f"./output/graph_plotting_{current_dateTime}.html")
             save(layout)
 
             show(layout)

@@ -10,11 +10,11 @@ from datetime import datetime
 def main():
     dt_format = '%d%m%Y_%H%M%S'
     current_dt = datetime.now().strftime(dt_format)  # Formatted date for filenames
-    train_data_filepath = './dataset/train.csv'
+    train_data_filepath = './input/train.csv'
     train_data_tablename = 'train_data'
-    ideal_data_filepath = './dataset/ideal.csv'
+    ideal_data_filepath = './input/ideal.csv'
     ideal_data_tablename = 'ideal_data'
-    test_data_filepath = './dataset/test.csv'
+    test_data_filepath = './input/test.csv'
     test_data_mapping_tablename = 'test_data_mapping'
 
     # File operations : Reading CSV files using our csv_file_operations class
